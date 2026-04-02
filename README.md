@@ -17,7 +17,7 @@ A zero-config remote MCP server that lets AI clients manage a Forem account usin
 2. Import into Vercel.
 3. Deploy.
 
-`vercel.json` rewrites `/` (and `/mcp`) to `api/index.js`, so your deployed root URL works directly as the MCP endpoint expected by clients.
+No `vercel.json` is required. Vercel will auto-detect `api/index.js` as a Serverless Function.
 
 ## MCP client config
 
