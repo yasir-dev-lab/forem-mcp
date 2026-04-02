@@ -1,0 +1,11 @@
+{
+  "name": "forem-mcp-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Remote MCP server for managing Forem posts on Vercel.",
+  "type": "module",
+  "scripts": {
+    "start": "vercel dev",
+    "check": "node --check api/index.js"
+  }
+}
