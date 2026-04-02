@@ -121,7 +121,6 @@ function rpcError(id, code, message, data) {
 
 function extractToken(req) {
   const auth = req.headers.authorization;
-<<<<<<< codex/build-vercel-ready-mcp-server-for-forem-uf11ly
   if (!auth) {
     return null;
   }
@@ -147,7 +146,6 @@ function getForemBaseUrl() {
 
 async function foremRequest(path, { method = "GET", token, body, query }) {
   const url = new URL(`${getForemBaseUrl()}${path}`);
-=======
   if (!auth || !auth.toLowerCase().startsWith("bearer ")) {
     return null;
   }
@@ -156,7 +154,6 @@ async function foremRequest(path, { method = "GET", token, body, query }) {
 
 async function foremRequest(path, { method = "GET", token, body, query }) {
   const url = new URL(`https://forem.com${path}`);
->>>>>>> main
   if (query) {
     Object.entries(query).forEach(([k, v]) => {
       if (v !== undefined && v !== null) {
@@ -167,13 +164,8 @@ async function foremRequest(path, { method = "GET", token, body, query }) {
 
   const headers = {
     Accept: "application/json",
-<<<<<<< codex/build-vercel-ready-mcp-server-for-forem-uf11ly
-    "api-key": token,
-    api_key: token,
-=======
     Authorization: `Bearer ${token}`,
     "api-key": token,
->>>>>>> main
   };
 
   if (body !== undefined) {
@@ -272,11 +264,7 @@ async function handleRpc(body, token) {
         return rpcError(
           id,
           -32001,
-<<<<<<< codex/build-vercel-ready-mcp-server-for-forem-uf11ly
-          "Missing API token. Set Authorization: Bearer <FOREM_API_KEY> in MCP client headers.",
-=======
           "Missing Bearer token. Set Authorization: Bearer <FOREM_API_KEY> in MCP client headers.",
->>>>>>> main
         );
       }
 
@@ -316,10 +304,6 @@ export default async function handler(req, res) {
         endpoint: "POST /",
         transport: "MCP JSON-RPC over HTTP",
       },
-<<<<<<< codex/build-vercel-ready-mcp-server-for-forem-uf11ly
-      requiredEnv: ["FOREM_INSTANCE_URL"],
-=======
->>>>>>> main
     });
   }
 
