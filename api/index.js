@@ -146,6 +146,14 @@ function getForemBaseUrl() {
 
 async function foremRequest(path, { method = "GET", token, body, query }) {
   const url = new URL(`${getForemBaseUrl()}${path}`);
+  if (!auth || !auth.toLowerCase().startsWith("bearer ")) {
+    return null;
+  }
+  return auth.slice(7).trim();
+}
+
+async function foremRequest(path, { method = "GET", token, body, query }) {
+  const url = new URL(`https://forem.com${path}`);
   if (query) {
     Object.entries(query).forEach(([k, v]) => {
       if (v !== undefined && v !== null) {
@@ -156,8 +164,8 @@ async function foremRequest(path, { method = "GET", token, body, query }) {
 
   const headers = {
     Accept: "application/json",
+    Authorization: `Bearer ${token}`,
     "api-key": token,
-    api_key: token,
   };
 
   if (body !== undefined) {
@@ -256,7 +264,7 @@ async function handleRpc(body, token) {
         return rpcError(
           id,
           -32001,
-          "Missing API token. Set Authorization: Bearer <FOREM_API_KEY> in MCP client headers.",
+          "Missing Bearer token. Set Authorization: Bearer <FOREM_API_KEY> in MCP client headers.",
         );
       }
 
@@ -296,7 +304,6 @@ export default async function handler(req, res) {
         endpoint: "POST /",
         transport: "MCP JSON-RPC over HTTP",
       },
-      requiredEnv: ["FOREM_INSTANCE_URL"],
     });
   }
 
