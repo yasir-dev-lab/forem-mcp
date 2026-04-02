@@ -15,7 +15,8 @@ A zero-config remote MCP server that lets AI clients manage a Forem account usin
 
 1. Push this repo to GitHub.
 2. Import into Vercel.
-3. Deploy.
+3. Set env var `FOREM_INSTANCE_URL` (or `FOREM_BASE_URL`) to your Forem instance URL, e.g. `https://dev.to` or `https://community.example.com`.
+4. Deploy.
 
 `vercel.json` rewrites `/` (and `/mcp`) to `api/index.js`, so your deployed root URL works directly as the MCP endpoint expected by clients.
 
@@ -46,3 +47,8 @@ npm run start
 
 - The server extracts your token from `Authorization` and forwards it to Forem as `api-key`/`api_key` headers (Forem key auth), which avoids Forem `401 unauthorized` responses caused by bearer-style upstream auth.
 - Endpoint transport is MCP JSON-RPC over HTTP (`POST /`).
+
+
+## Required environment variable
+
+- `FOREM_INSTANCE_URL` (preferred) or `FOREM_BASE_URL`: Base URL of your Forem instance (no trailing slash needed).

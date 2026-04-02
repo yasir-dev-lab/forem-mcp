@@ -132,8 +132,20 @@ function extractToken(req) {
   return auth.trim();
 }
 
+
+function getForemBaseUrl() {
+  const baseUrl = process.env.FOREM_INSTANCE_URL || process.env.FOREM_BASE_URL;
+  if (!baseUrl) {
+    throw new Error(
+      "Missing FOREM_INSTANCE_URL (or FOREM_BASE_URL). Set it to your Forem site URL, e.g. https://dev.to or https://community.example.com.",
+    );
+  }
+
+  return baseUrl.replace(/\/$/, "");
+}
+
 async function foremRequest(path, { method = "GET", token, body, query }) {
-  const url = new URL(`https://forem.com${path}`);
+  const url = new URL(`${getForemBaseUrl()}${path}`);
   if (query) {
     Object.entries(query).forEach(([k, v]) => {
       if (v !== undefined && v !== null) {
@@ -284,6 +296,7 @@ export default async function handler(req, res) {
         endpoint: "POST /",
         transport: "MCP JSON-RPC over HTTP",
       },
+      requiredEnv: ["FOREM_INSTANCE_URL"],
     });
   }
 
