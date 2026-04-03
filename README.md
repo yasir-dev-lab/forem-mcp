@@ -1,6 +1,6 @@
 # Forem Remote MCP Server (Vercel-ready)
 
-A zero-config remote MCP server that lets AI clients manage a Forem account using the API key passed in the MCP server `Authorization` header.
+A zero-config remote MCP server that lets AI clients manage a Forem account using the API key passed in the MCP server `api-key` header.
 
 ## Supported tools
 
@@ -22,7 +22,7 @@ A zero-config remote MCP server that lets AI clients manage a Forem account usin
 
 ## MCP client config
 
-Use your server URL and pass Forem API key as Bearer token:
+Use your server URL and pass Forem API key in the `api-key` header:
 
 ```json
 {
@@ -30,12 +30,18 @@ Use your server URL and pass Forem API key as Bearer token:
     "my-remote-server": {
       "url": "https://forem-mcp.vercel.app",
       "headers": {
-        "Authorization": "Bearer YOUR_FOREM_API"
+        "Content-Type": "application/json",
+        "api-key": "YOUR_FOREM_API_KEY",
+        "User-Agent": "forem-remote-mcp/1.0.0"
       }
     }
   }
 }
 ```
+
+**Important:** Forem API requires:
+- The `api-key` header for authentication (not `Authorization: Bearer`)
+- A `User-Agent` header (required by Forem API, returns 401 if missing)
 
 ## Local dev
 
@@ -45,7 +51,7 @@ npm run start
 
 ## Notes
 
-- The server extracts your token from `Authorization` and forwards it to Forem as `api-key`/`api_key` headers (Forem key auth), which avoids Forem `401 unauthorized` responses caused by bearer-style upstream auth.
+- The server extracts your token from the `api-key` header (or `Authorization: Bearer` as fallback) and forwards it to Forem as `api-key` header.
 - Endpoint transport is MCP JSON-RPC over HTTP (`POST /`).
 
 
