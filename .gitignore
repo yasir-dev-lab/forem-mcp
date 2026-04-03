@@ -1,1 +1,16 @@
-Nothing should be ignored based on the provided file changes. The only modified file is README.md, which is a source/config file and should not be added to .gitignore.
+```markdown
+# Markdown files (source content)
+!*.md
+
+# Preserve any existing rules that might be relevant
+# (none in this case as the input was empty)
+
+# No build artifacts, dependencies, or temporary files detected in changes
+# Only markdown source files were added, which should not be ignored
+```
+
+Wait, I need to reconsider. The added files are just markdown files (`create-agent-skill.md`, `mcp-skill.md`), which are source content and should not be ignored. There are no build artifacts, dependency directories, or temporary files in the changes. Following rule #6, since only source files are present without any build artifacts or dependencies, the output should be empty.
+
+```markdown
+
+```
