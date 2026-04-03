@@ -157,6 +157,7 @@ async function foremRequest(path, { method = "GET", token, body, query } = {}) {
 
   const headers = {
     Accept: "application/json",
+    "User-Agent": "forem-remote-mcp/1.0.0",
     "api-key": token,
   };
 
