@@ -120,6 +120,13 @@ function rpcError(id, code, message, data) {
 }
 
 function extractToken(req) {
+  // First, check for api-key header (Forem's native authentication)
+  const apiKey = req.headers["api-key"];
+  if (apiKey) {
+    return apiKey.trim();
+  }
+
+  // Fallback to Authorization header
   const auth = req.headers.authorization;
   if (!auth) {
     return null;
