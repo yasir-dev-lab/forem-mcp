@@ -144,16 +144,9 @@ function getForemBaseUrl() {
   return baseUrl.replace(/\/$/, "");
 }
 
-async function foremRequest(path, { method = "GET", token, body, query }) {
-  const url = new URL(`${getForemBaseUrl()}${path}`);
-  if (!auth || !auth.toLowerCase().startsWith("bearer ")) {
-    return null;
-  }
-  return auth.slice(7).trim();
-}
-
-async function foremRequest(path, { method = "GET", token, body, query }) {
-  const url = new URL(`https://forem.com${path}`);
+async function foremRequest(path, { method = "GET", token, body, query } = {}) {
+  const baseUrl = getForemBaseUrl();
+  const url = new URL(`${baseUrl}${path}`);
   if (query) {
     Object.entries(query).forEach(([k, v]) => {
       if (v !== undefined && v !== null) {
@@ -164,7 +157,6 @@ async function foremRequest(path, { method = "GET", token, body, query }) {
 
   const headers = {
     Accept: "application/json",
-    Authorization: `Bearer ${token}`,
     "api-key": token,
   };
 

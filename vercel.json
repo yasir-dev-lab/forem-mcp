@@ -2,19 +2,11 @@
   "rewrites": [
     {
       "source": "/",
-<<<<<<< codex/build-vercel-ready-mcp-server-for-forem-xgazsz
       "destination": "/api/index.js"
     },
     {
       "source": "/mcp",
       "destination": "/api/index.js"
-=======
-      "destination": "/api/index"
-    },
-    {
-      "source": "/mcp",
-      "destination": "/api/index"
->>>>>>> main
     }
   ]
 }
